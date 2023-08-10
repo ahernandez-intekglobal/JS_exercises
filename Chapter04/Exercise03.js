@@ -1,3 +1,8 @@
+'use strict'
+// Create a custom object type that will hold a number value. 
+//     [a] Make sure that no other data type can be assigned to that variable. 
+//     [b] It must hold ONLY numbers.
+
 let OnlyNumber = class{
     constructor(newValue = 0){
         if(typeof newValue !== 'number')

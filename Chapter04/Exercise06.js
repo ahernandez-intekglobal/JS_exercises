@@ -1,3 +1,11 @@
+'use strict'
+// Make the function from exercise 5 accept its parameters as either a parameter list or as two arrays containing 2D or 3D point data. 
+// Example:
+// 	   distance (1, 2, 2, 2); // returns 1 (done as part of exercise 5)
+//     distance ([1,2], [2,2]); // returns 1
+// 	   distance ([1,2], [2,2,4]); // error: incompatible point data
+
+
 let distance = function (...args){
     if(args.length === 4){
         return Math.hypot((args[0]-args[2]),(args[1]-args[3]));
@@ -19,7 +27,7 @@ let distance = function (...args){
         }
     }
     else{
-        throw new Error(`Invalid number of parameters taken ${args.length}, where should be 4 or 6`);
+        throw new Error(`Invalid number of parameters taken ${args.length}, where should be 2,4 or 6`);
     }
 }
 

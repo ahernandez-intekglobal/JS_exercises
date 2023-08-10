@@ -1,3 +1,14 @@
+'use strict'
+// Create a custom object that will hold an image’s mock information such as pixel color data, image size, and name. It must be able to return the information.
+// Example:
+//     var data = new Array (1600); // 40 x 40 px dummy image data
+//     var img = new Image (data, 40, 40, ‘myImage’);
+//     img.width; // 40
+//     img.height; // 40
+//     img.name; // ‘myImage’
+//     img.getPixel(20, 4); // returns the color of the pixel at that position. 
+
+
 let Image = class{
     constructor(data, width, height, name){
         this.data = data;

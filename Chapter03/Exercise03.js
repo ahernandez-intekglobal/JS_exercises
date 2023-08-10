@@ -1,3 +1,10 @@
+'use strict'
+// Create an object that will hold methods for adding, multiplying, and factorial operations.
+// Example:
+//     var a = myMath.add (1, 2, 3); //6
+//     var b = myMath.mul (1, 2, 3); // 6
+//     var c = myMath.fact (	3); // 6
+
 let myMath = {
     add : function (...args){
         let res = 0;
