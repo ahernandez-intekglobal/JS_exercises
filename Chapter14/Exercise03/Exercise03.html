@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 03</title>
+    <style>
+        /* Add your CSS styles here */
+        .template1 {
+            display: flex;
+            align-items: center;
+        }
+        .template2 {
+            display: flex;
+        }
+        .template2 img {
+            float: left;
+            margin-right: 10px;
+        }
+        .template2 p {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#template1">Template 1</a></li>
+                <li><a href="#template2">Template 2</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="template1" class="template1">
+            <!-- Template 1 content will be inserted here using JavaScript -->
+        </section>
+
+        <section id="template2" class="template2">
+            <!-- Template 2 content will be inserted here using JavaScript -->
+        </section>
+    </main>
+    <script>
+        fetch('./data.json',{
+        method: 'GET',
+        mode: 'no-cors',
+        cache: 'default'
+    }).then(response => {console.log(response)});
+    </script>
+    <!-- <script src="Exercise03.js"></script> -->
+</body>
+</html>

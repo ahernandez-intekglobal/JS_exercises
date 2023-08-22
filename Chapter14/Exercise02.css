@@ -1,0 +1,32 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    font-size: 18px;
+}
+
+#textContainer {
+    column-count: 2;
+}
+
+#columnSelect {
+    font-size: 20px;
+    width: 100%;
+    margin-bottom: 12px;
+    margin-top: 12px;
+}
+
+label {
+    color: #333;
+}
+
+#numColumns {
+    font-size: 19px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+p {
+    margin-block-start: 0;
+}

@@ -1,0 +1,12 @@
+{
+    "template1": {
+        "image": "image1.jpg",
+        "title": "Template 1 Title",
+        "text": "This is some text for Template 1. Click the link to go to Template 2."
+    },
+    "template2": {
+        "image": "image2.jpg",
+        "title": "Template 2 Title",
+        "text": "This is some text for Template 2. Click the link to go back to Template 1."
+    }
+}
