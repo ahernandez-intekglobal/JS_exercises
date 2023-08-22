@@ -13,12 +13,7 @@
 //    [k]The user should be able to directly navigate to any of the page’s views
 
 document.addEventListener("DOMContentLoaded", function () {
-    // Load data from JSON (you need a JSON file for this)
-    fetch('./data.json', {
-        method: 'GET',
-        mode: 'no-cors',
-        cache: 'default'
-    })
+    fetch('data.json')
         .then(response => response.json())
         .then(data => {
             // Populate Template 1
@@ -59,7 +54,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Function to show/hide templates
     function showTemplate(templateId) {
         const templates = document.querySelectorAll('section');
         templates.forEach(template => template.style.display = 'none');
