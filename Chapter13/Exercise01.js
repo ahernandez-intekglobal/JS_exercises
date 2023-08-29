@@ -3,15 +3,20 @@
 // numbered and each element must respond to a click event by alerting its corresponding number.
 
 let grid = document.getElementById('grid-container');
+let gridFragment = document.createDocumentFragment();
 
 for(let i = 0; i<25; i++){
     let gridItem = document.createElement('div');
-    gridItem.innerHTML = `<div class="grid-item" id="${i+1}">${i+1}</div>`;
-    grid.appendChild(gridItem);
-    grid.addEventListener('click', alertNumber);
+    gridItem.className = "grid-item";
+    gridItem.id = i+1;
+    gridItem.textContent = i+1;
+    gridFragment.appendChild(gridItem);
 }
+grid.appendChild(gridFragment);
+grid.addEventListener('click', alertNumber);
 
 
 function alertNumber(event){
-    alert(`You have clicked on ${event.target.textContent}`);
+    if(event.target.className === "grid-item")
+        alert(`You have clicked on ${event.target.textContent}`);
 }

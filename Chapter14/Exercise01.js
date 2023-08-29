@@ -9,13 +9,15 @@ function generateGrid() {
     let columns = parseInt(document.getElementById('columns').value);
     let gridContainer = document.getElementById('gridContainer');
 
-    gridContainer.innerHTML = '';
+    let gridFragment = document.createDocumentFragment();
 
     for (let i = 0; i < rows * columns; i++) {
         let cell = document.createElement('div');
         cell.className = 'cell';
         cell.textContent = i + 1;
-        gridContainer.appendChild(cell);
+        gridFragment.appendChild(cell);
     }
+    gridContainer.innerHTML = "";
+    gridContainer.appendChild(gridFragment);
     gridContainer.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
 }

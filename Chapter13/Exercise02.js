@@ -17,6 +17,8 @@ function usageCounter(){
     let meter = document.getElementById("usageMeter");
 
     meter.value = counterFunction();
+    // Reflows the meter element
+    let _ = meter.offsetHeight;
     if (meter.value === 0){
         button.disabled = true;
         button.textContent = `Disabled :c (remain ${meter.value})`;

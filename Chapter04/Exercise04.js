@@ -9,16 +9,17 @@ let dataType = function(...args) {
     for(let object of args){
         if (Object.prototype.toString.call(object) === '[object Number]'){
             if(Number.isInteger(object)){
-                console.log(Object.prototype.toString.call(object));
+                console.log('number');
             }
             else if(Number.isNaN(object)){
-                console.log('[object NaN]');
+                console.log('NaN');
             }
             else{
-                console.log('[object Float]');
+                console.log('float');
             }
         }
-        console.log(Object.prototype.toString.call(object));
+        else
+            console.log(Object.prototype.toString.call(object).slice(7,-1).toLowerCase());
     }
 }
 

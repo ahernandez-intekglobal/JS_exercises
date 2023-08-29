@@ -7,23 +7,24 @@
 
 
 let distance = function (...args){
-    if(args.length === 4){
-        return Math.hypot((args[0]-args[2]),(args[1]-args[3]));
-    }
-    else if(args.length === 6){
-        return Math.hypot((args[0]-args[3]),(args[1]-args[4]),(args[2]-args[5]));
+    if(args.length === 4 || args.length === 6){
+        let compDistances = [];
+        for (let i=0;i<args.length/2;i++){
+            compDistances[i] = args[i]-args[args.length/2 + i];
+        }
+        return Math.hypot(...compDistances);
     }
     else if(args.length === 2){
-        if(Object.prototype.toString.call(args[0]) === '[object Array]' && Object.prototype.toString.call(args[0]) === '[object Array]'){
-            if(args[0].length === 2 && args[1].length === 2){
-                return Math.hypot((args[0][0]-args[1][0]),(args[0][1]-args[1][1]));
+        if(args.every(arg => Array.isArray(arg)) && 
+           ( args.every(arg => arg.length===2) || args.every(arg => argarg.length===3) ) ){
+            let compDistances = [];
+            for (let i=0;i<args[0].length;i++){
+                compDistances[i] = args[0][i]-args[1][i];
             }
-            else if(args[0].length === 3 && args[1].length === 3){
-                return Math.hypot((args[0][0]-args[1][0]),(args[0][1]-args[1][1]),(args[0][2]-args[1][2]));
-            }
-            else{
-                throw new Error("Incompatible point data");
-            }
+            return Math.hypot(...compDistances);
+        }
+        else{
+            throw new Error("Incompatible point data");
         }
     }
     else{

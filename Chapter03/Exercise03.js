@@ -7,6 +7,8 @@
 
 let myMath = {
     add : function (...args){
+        if (args.length === 0)
+            return
         let res = 0;
         for(let num of args){
             res += num;
@@ -14,6 +16,8 @@ let myMath = {
         return res;
     },
     mul: function (...args){
+        if (args.length === 0)
+            return
         let res=1;
         for(let num of args){
             res *= num;
@@ -21,6 +25,8 @@ let myMath = {
         return res;
     },
     fact: function (num){
+        if (!num)
+            return
         let res = 1;
         while(num > 1){
             res *= num;

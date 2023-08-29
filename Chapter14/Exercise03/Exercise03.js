@@ -13,50 +13,62 @@
 //    [k]The user should be able to directly navigate to any of the page’s views
 
 document.addEventListener("DOMContentLoaded", function () {
-    fetch('data.json')
-        .then(response => response.json())
-        .then(data => {
-            // Populate Template 1
-            const template1 = document.getElementById('template1');
-            template1.innerHTML = `
-                <img src="${data.template1.image}" alt="${data.template1.title}">
-                <div>
-                    <h2>${data.template1.title}</h2>
-                    <p>${data.template1.text}</p>
-                </div>
-                <a href="#template2">Go to Template 2</a>
-            `;
-
-            // Populate Template 2
-            const template2 = document.getElementById('template2');
-            template2.innerHTML = `
-                <img src="${data.template2.image}" alt="${data.template2.title}">
-                <p>${data.template2.title} ${data.template2.text}</p>
-                <a href="#template1">Go to Template 1</a>
-            `;
-        });
-
-    // Handle direct navigation to templates
-    const hash = window.location.hash;
-    if (hash === '#template2') {
-        showTemplate('template2');
-    } else {
-        showTemplate('template1');
+    if (!localStorage.getItem('currentPage')) {
+        localStorage.setItem('currentPage', 'home');
     }
 
-    // Listen for hash changes
-    window.addEventListener('hashchange', () => {
-        const hash = window.location.hash;
-        if (hash === '#template2') {
-            showTemplate('template2');
-        } else {
-            showTemplate('template1');
+    fetch('data.json')
+    .then(response => response.json())
+    .then(data => {
+        let app = document.querySelector('#app');
+        let fragment = document.createDocumentFragment();
+        
+        // Populate Template 1
+        const template1 = document.querySelector('#template');
+        for (let article in data) {
+            const clone = template1.content.cloneNode(true);
+            let articleElement = clone.querySelector("article");
+            articleElement.id = article;
+            articleElement.className = "card";
+            let img = clone.querySelector('img');
+            img.src = data[article].image;
+            let h2 = clone.querySelector('h2');
+            h2.textContent = data[article].title;
+            let p = clone.querySelector('p');
+            p.textContent = data[article].text;
+            fragment.appendChild(clone);
         }
+
+        let backButton = document.createElement('button');
+        backButton.textContent = "back";
+        backButton.onclick = templateHandler;
+        fragment.appendChild(backButton);
+        app.appendChild(fragment);
+        app.addEventListener("click", templateHandler);
+        showTemplate(localStorage.getItem('currentPage'));
     });
 
-    function showTemplate(templateId) {
-        const templates = document.querySelectorAll('section');
-        templates.forEach(template => template.style.display = 'none');
-        document.getElementById(templateId).style.display = 'block';
+    function templateHandler(event){
+        if (event.target.parentNode.nodeName === 'ARTICLE'){
+            showTemplate(event.target.parentNode.id);
+        }
+        if (event.target.nodeName === 'BUTTON'){
+            showTemplate('home');
+        }
+    }
+
+    function showTemplate(articleID) {
+        if (articleID !== 'home'){
+            const articles = document.querySelectorAll('article');
+            articles.forEach(article => article.className = 'hidden');
+            let article = document.querySelector(`#${articleID}`);
+            article.className = "focus";
+            localStorage.setItem('currentPage', articleID);
+        }
+        else{
+            const articles = document.querySelectorAll('article');
+            articles.forEach(article => article.className = 'card');
+            localStorage.setItem('currentPage', 'home');
+        }
     }
 });

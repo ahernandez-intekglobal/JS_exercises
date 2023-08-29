@@ -7,6 +7,7 @@
 //  var obj = dataParse(str);
 
 function dataParse(strObj){
+    'use strict';
     return eval(`(()=>{return ${strObj}})()`);
 }
 var str = "{prop1: 42, myFn: function(a, b) { return a+b+this.prop1;}}";

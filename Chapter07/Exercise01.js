@@ -3,29 +3,23 @@
 // 	 Example:
 // 	 “#3020ff” 	 →   “rgb ( 48, 32, 255)”
 
-function from16to10(num){
-    if (/[0-9]/.test(num)) return Number(num);
-    if (num === 'A' || num === 'a') return 10;
-    if (num === 'B' || num === 'b') return 11;
-    if (num === 'C' || num === 'c') return 12;
-    if (num === 'D' || num === 'd') return 13;
-    if (num === 'E' || num === 'e') return 14;
-    if (num === 'F' || num === 'f') return 15;
-}
-
 function HEX2RGB(HEX){
-    // If starts with # removes it
-    let hex = HEX.replace(/^#/,'');
     // Check if is a valid hex string
-    if (!/^(?:[0-9a-fA-F]{3}){1,2}$/.test(hex))
-        throw new Error('Invalid hex value');
+    let regex6dig = /^#([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/;
+    let regex3dig = /^#([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])$/;
+    let R,G,B;
+    if (regex6dig.test(HEX)){
+        [R,G,B] = HEX.match(regex6dig).slice(1,4).map(x => parseInt(x,16));
+    }
     // If is 3 length string, duplicates all characters
-    if (hex.length === 3)
-        hex = hex.replace(/(.)/g, '$1$1');
-    
-    let decArray = Array.from(hex).map((x)=>from16to10(x));
-    return(`rgb (${decArray[0]*16 + decArray[1]}, ${decArray[2]*16 + decArray[3]}, ${decArray[4]*16 + decArray[5]})`);
+    else if (regex3dig.test(HEX)){
+        [R,G,B] = HEX.match(regex3dig).slice(1,4).map(x => parseInt(x+x,16));
+    }
+    else{
+        throw new Error('Invalid hex value');
+    }
+    return(`rgb (${R}, ${G}, ${B})`);
 
 }
 
-HEX2RGB("#fff")
+console.log(HEX2RGB("#00AAFC"));
