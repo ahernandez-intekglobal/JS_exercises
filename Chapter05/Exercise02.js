@@ -108,6 +108,8 @@ class Building {
     constructor() {
         this.Equipment = [];
         this.People = [];
+        this.userCache = {}; // Memoization cache for user search
+        this.equipmentCache = {}; // Memoization cache for equipment search
     }
     // Searches the user to add by name
     // If user name already exists, add user to the same name entry.
@@ -162,44 +164,56 @@ class Building {
     // Searches user or equipment by name
     // Returns objects that matches that name if exist
     // Retuns null if do not
-    search(type,name) {
-        let array;
-        if (type === "user"){
+    search(type, name) {
+        let array, cache;
+        if (type === "user") {
             array = this.People;
-        }
-        else if(type==="equipment"){
+            cache = this.userCache;
+        } else if (type === "equipment") {
             array = this.Equipment;
+            cache = this.equipmentCache;
+        } else {
+            throw new Error(`Type ${type} not valid. Expected "user" or "equipment"`);
         }
-        else{
-            throw new Error(`Type ${type} not valid. Expected "user" or "equipment"`)
+
+        // Check if the result is already in the cache
+        if (name in cache) {
+            console.log(`Memoized ${type} search for ${name}`);
+            return cache[name];
         }
+
         if (array.length === 0) {
-            return null;
-        }
-        else if (array.length === 1)
-            return array[0];
-        else {
+            // Update the cache and return null if not found
+            cache[name] = null;
+        } else if (array.length === 1) {
+            // Update the cache and return the result if there's only one entry
+            cache[name] = array[0];
+        } else {
             let leftPivot = 0;
-            let rightPivot = array.length -1;
+            let rightPivot = array.length - 1;
             let middle = 0;
 
             while (leftPivot <= rightPivot) {
-                console.log(leftPivot, middle, rightPivot);
                 middle = leftPivot + Math.floor((rightPivot - leftPivot) / 2);
-                switch (array[middle].name.localeCompare(name)) {
-                    case 1:
-                        rightPivot = middle - 1;
-                        break
-                    case 0:
-                        return array[middle];
-                    case -1:
-                        leftPivot = middle + 1;
-                        break
+                const comparison = array[middle].name.localeCompare(name);
+
+                if (comparison === 0) {
+                    // Update the cache and return the result if found
+                    cache[name] = array[middle];
+                    console.log(`Memoized ${type} search for ${name}`);
+                    return array[middle];
+                } else if (comparison === -1) {
+                    leftPivot = middle + 1;
+                } else {
+                    rightPivot = middle - 1;
                 }
             }
-            return null;
+            // Update the cache and return null if not found
+            cache[name] = null;
         }
 
+        console.log(`Memoized ${type} search for ${name}`);
+        return cache[name];
     }
 }
 
