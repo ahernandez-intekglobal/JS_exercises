@@ -12,10 +12,22 @@
 //    [j]The current view (template 1 or template 2) should be maintained even if the browser is refreshed. 
 //    [k]The user should be able to directly navigate to any of the page’s views
 
+function handleRouteChange() {
+    const hash = window.location.hash.substring(1);
+    const currentPage = hash || 'home';
+    showTemplate(currentPage);
+}
+
+window.addEventListener('hashchange', handleRouteChange);
+
+window.addEventListener('load', handleRouteChange);
+
 document.addEventListener("DOMContentLoaded", function () {
     if (!localStorage.getItem('currentPage')) {
         localStorage.setItem('currentPage', 'home');
     }
+    const initialHash = window.location.hash.substring(1);
+    const initialArticleId = initialHash || 'home';
 
     fetch('data.json')
     .then(response => response.json())
@@ -48,14 +60,21 @@ document.addEventListener("DOMContentLoaded", function () {
         showTemplate(localStorage.getItem('currentPage'));
     });
 
-    function templateHandler(event){
-        if (event.target.parentNode.nodeName === 'ARTICLE'){
-            showTemplate(event.target.parentNode.id);
+    function templateHandler(event) {
+        if (event.target.parentNode.nodeName === 'ARTICLE') {
+            const article = event.target.parentNode;
+            const articleId = article.id;
+            article.dataset.id = articleId;
+            showTemplate(articleId);
+            history.pushState({ currentPage: articleId }, null, `#${articleId}`);
         }
-        if (event.target.nodeName === 'BUTTON'){
+        if (event.target.nodeName === 'BUTTON') {
             showTemplate('home');
+            history.pushState({ currentPage: 'home' }, null, 'index.html');
         }
     }
+    
+    
 
     function showTemplate(articleID) {
         if (articleID !== 'home'){
@@ -71,4 +90,6 @@ document.addEventListener("DOMContentLoaded", function () {
             localStorage.setItem('currentPage', 'home');
         }
     }
+
+    showTemplate(initialArticleId);
 });

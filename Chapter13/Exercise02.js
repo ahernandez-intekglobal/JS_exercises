@@ -10,15 +10,21 @@ function reverseCounter(start){
     }
 }
 let counterFunction = reverseCounter(3);
+let metterElem
 
 
 function usageCounter(){
     let button = document.getElementById("usageButton");
     let meter = document.getElementById("usageMeter");
+    let newMeter = meter.cloneNode();
 
-    meter.value = counterFunction();
+    newMeter.value = counterFunction();
+
     // Reflows the meter element
-    let _ = meter.offsetHeight;
+    meter.remove();
+    meter = newMeter;
+    document.querySelector("body").appendChild(meter);
+    
     if (meter.value === 0){
         button.disabled = true;
         button.textContent = `Disabled :c (remain ${meter.value})`;

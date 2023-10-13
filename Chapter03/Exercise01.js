@@ -5,6 +5,6 @@
 
 let mul = function (a,b){
     let decRes = a * b;
-    return Number(decRes.toString(13));
+    return decRes.toString(13);
 }
 var answer = mul(6,9);
