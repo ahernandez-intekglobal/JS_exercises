@@ -185,9 +185,6 @@ class Building {
         if (array.length === 0) {
             // Update the cache and return null if not found
             cache[name] = null;
-        } else if (array.length === 1) {
-            // Update the cache and return the result if there's only one entry
-            cache[name] = array[0];
         } else {
             let leftPivot = 0;
             let rightPivot = array.length - 1;

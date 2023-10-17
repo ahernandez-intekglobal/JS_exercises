@@ -12,6 +12,21 @@
 //    [j]The current view (template 1 or template 2) should be maintained even if the browser is refreshed. 
 //    [k]The user should be able to directly navigate to any of the page’s views
 
+function showTemplate(articleID) {
+    if (articleID !== 'home'){
+        const articles = document.querySelectorAll('article');
+        articles.forEach(article => article.className = 'hidden');
+        let article = document.getElementById(articleID);
+        article.className = "focus";
+        localStorage.setItem('currentPage', articleID);
+    }
+    else{
+        const articles = document.querySelectorAll('article');
+        articles.forEach(article => article.className = 'card');
+        localStorage.setItem('currentPage', 'home');
+    }
+}
+
 function handleRouteChange() {
     const hash = window.location.hash.substring(1);
     const currentPage = hash || 'home';
@@ -70,26 +85,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         if (event.target.nodeName === 'BUTTON') {
             showTemplate('home');
-            history.pushState({ currentPage: 'home' }, null, 'index.html');
-        }
-    }
-    
-    
-
-    function showTemplate(articleID) {
-        if (articleID !== 'home'){
-            const articles = document.querySelectorAll('article');
-            articles.forEach(article => article.className = 'hidden');
-            let article = document.querySelector(`#${articleID}`);
-            article.className = "focus";
-            localStorage.setItem('currentPage', articleID);
-        }
-        else{
-            const articles = document.querySelectorAll('article');
-            articles.forEach(article => article.className = 'card');
-            localStorage.setItem('currentPage', 'home');
+            history.pushState({ currentPage: 'home' }, null, 'Excercise03.html');
         }
     }
 
     showTemplate(initialArticleId);
+    handleRouteChange();
 });

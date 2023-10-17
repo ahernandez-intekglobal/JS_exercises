@@ -6,10 +6,7 @@
 let OnlyNumber = class{
     #value;
     constructor(newValue = 0){
-        if(typeof newValue !== 'number')
-            throw new Error(`Parameter type "${typeof newValue }" is not a number!`);
-        else
-            this.#value = newValue;
+        this.#value = newValue;
     }
     get value(){
         return this.#value;
